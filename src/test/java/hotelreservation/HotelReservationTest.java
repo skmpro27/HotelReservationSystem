@@ -7,9 +7,9 @@ public class HotelReservationTest {
     @Test
     public void givenHotelAddInHotelReservationReturnNumberOfHotel() {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110);
-        Hotel bridgewood = new Hotel( "Bridgewood", 160);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -22,16 +22,33 @@ public class HotelReservationTest {
     @Test
     public void givenHotelRateAddInHotelReservationReturnCheapestHotel() {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110);
-        Hotel bridgewood = new Hotel( "Bridgewood", 160);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
         hotelReservation.addHotel(ridgewood);
-        //check for added hotels
+
         Hotel hotel = hotelReservation.cheapestHotel("10Sep2020", "11Sep2020");
         System.out.println("Name: " + hotel.getHotelName() + ", Total Rates: " + hotel.getTotalCost());
         Assert.assertEquals("Lakewood", hotel.getHotelName());
+    }
+
+    @Test
+    public void givenWeekdayAndWeekendRatesHotelReservationReturnSame() {
+        HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 0);
+        //adding hotels
+        hotelReservation.addHotel(lakewood);
+        hotelReservation.addHotel(bridgewood);
+        hotelReservation.addHotel(ridgewood);
+
+        lakewood.setWeekendRate(90);
+        bridgewood.setWeekendRate(50);
+        ridgewood.setWeekendRate(150);
+        Assert.assertEquals(90, lakewood.getWeekendRate());
     }
 }

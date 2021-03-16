@@ -3,19 +3,33 @@ package hotelreservation;
 public class Hotel {
     private String hotelName;
     private int totalCost = 0;
-    private final int REGULAR_RATE;
+    private int weekdayRate;
+    private int weekendRate;
 
-    public Hotel(String hotelName, int regularRate) {
+    public Hotel(String hotelName, int weekdayRate, int weekendRate ) {
         this.hotelName = hotelName;
-        this.REGULAR_RATE = regularRate;
+        this.weekdayRate = weekdayRate;
+        this.weekendRate = weekendRate;
     }
 
     public String getHotelName() {
         return hotelName;
     }
 
-    public int getRegularRate() {
-        return REGULAR_RATE;
+    public void setWeekdayRate(int weekdayRate) {
+        this.weekdayRate = weekdayRate;
+    }
+
+    public int getWeekdayRate() {
+        return weekdayRate;
+    }
+
+    public void setWeekendRate(int weekendRate) {
+        this.weekendRate = weekendRate;
+    }
+
+    public int getWeekendRate() {
+        return weekendRate;
     }
 
     public int getTotalCost() {

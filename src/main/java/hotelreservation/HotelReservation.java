@@ -30,7 +30,7 @@ public class HotelReservation {
         int totalCost = 0;
         for (int i = 0; i < hotel.size(); i++) {
             for (int j = 0; j < dates.length; j++) {
-                totalCost = totalCost + hotel.get(i).getRegularRate();
+                totalCost = totalCost + hotel.get(i).getWeekendRate();
             }
             if (min > totalCost) {
                 hotel.get(i).setTotalCost(totalCost);
