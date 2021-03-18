@@ -36,15 +36,8 @@ public class HotelReservation {
         this.dates = dates;
         int min = 999999999;
         Hotel cheapest = hotel.get(0);
-        int totalCost = 0;
         for (int i = 0; i < hotel.size(); i++) {
-            totalCost = 0;
-            for (int j = 0; j < dates.length; j++) {
-                if (dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7)
-                    totalCost += hotel.get(i).getWeekdayRate();
-                else
-                    totalCost +=  hotel.get(i).getWeekendRate();
-            }
+            int totalCost = hotelTotalCost(i);
             hotel.get(i).setTotalCost(totalCost);
             if (min >= totalCost)
                 if (cheapest.getRating() < hotel.get(i).getRating()) {
@@ -53,5 +46,28 @@ public class HotelReservation {
                 }
         }
         return cheapest;
+    }
+
+    public  int hotelTotalCost(int idx) throws ParseException {
+        int totalCost = 0;
+        for (int j = 0; j < dates.length; j++) {
+            if (dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7)
+                totalCost += hotel.get(idx).getWeekdayRate();
+            else
+                totalCost +=  hotel.get(idx).getWeekendRate();
+        }
+        return totalCost;
+    }
+
+    public Hotel bestRating(String... dates) throws ParseException {
+        this.dates = dates;
+        Hotel maxRating = hotel.get(0);
+        for (int i = 0; i < hotel.size(); i++) {
+            int totalCost = hotelTotalCost(i);
+            hotel.get(i).setTotalCost(totalCost);
+            if (maxRating.getRating() < hotel.get(i).getRating())
+                maxRating = hotel.get(i);
+        }
+        return maxRating;
     }
 }
