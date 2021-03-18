@@ -3,6 +3,8 @@ package hotelreservation;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.ParseException;
+
 public class HotelReservationTest {
     @Test
     public void givenHotelAddInHotelReservationReturnNumberOfHotel() {
@@ -20,7 +22,7 @@ public class HotelReservationTest {
     }
 
     @Test
-    public void givenHotelRateAddInHotelReservationReturnCheapestHotel() {
+    public void givenHotelRateAddInHotelReservationReturnCheapestHotel() throws ParseException {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
         Hotel lakewood = new Hotel( "Lakewood", 110, 90);
         Hotel bridgewood = new Hotel( "Bridgewood", 150, 50);
@@ -30,7 +32,7 @@ public class HotelReservationTest {
         hotelReservation.addHotel(bridgewood);
         hotelReservation.addHotel(ridgewood);
 
-        Hotel hotel = hotelReservation.cheapestHotel("10Sep2020", "11Sep2020");
+        Hotel hotel = hotelReservation.cheapestHotel("10-Sep-2020", "11-Sep-2020");
         System.out.println("Name: " + hotel.getHotelName() + ", Total Rates: " + hotel.getTotalCost());
         Assert.assertEquals("Lakewood", hotel.getHotelName());
     }
@@ -50,5 +52,21 @@ public class HotelReservationTest {
         bridgewood.setWeekendRate(50);
         ridgewood.setWeekendRate(150);
         Assert.assertEquals(90, lakewood.getWeekendRate());
+    }
+
+    @Test
+    public void givenHotelRatesReturnCheapestHotel() throws ParseException {
+        HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150);
+        //adding hotels
+        hotelReservation.addHotel(lakewood);
+        hotelReservation.addHotel(bridgewood);
+        hotelReservation.addHotel(ridgewood);
+
+        Hotel hotel = hotelReservation.cheapestHotel("11-Sep-2020", "12-Sep-2020");
+        System.out.println("Name: " + hotel.getHotelName() + ", Total Rates: " + hotel.getTotalCost());
+        Assert.assertEquals("Lakewood", hotel.getHotelName());
     }
 }

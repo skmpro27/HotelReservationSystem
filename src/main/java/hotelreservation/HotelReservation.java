@@ -1,5 +1,7 @@
 package hotelreservation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 enum CustomerType {
@@ -23,17 +25,28 @@ public class HotelReservation {
         return hotel.size();
     }
 
-    public Hotel cheapestHotel(String... dates) {
+    public int dayOfWeek(String date) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        Date newDate = new SimpleDateFormat("dd-MMM-yyyy").parse(date);
+        cal.setTime(newDate);
+        return cal.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public Hotel cheapestHotel(String... dates) throws ParseException {
         this.dates = dates;
         int min = 999999999;
-        Hotel cheapest = null;
+        Hotel cheapest = hotel.get(0);
         int totalCost = 0;
         for (int i = 0; i < hotel.size(); i++) {
+            totalCost = 0;
             for (int j = 0; j < dates.length; j++) {
-                totalCost = totalCost + hotel.get(i).getWeekendRate();
+                if (dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7)
+                    totalCost = totalCost + hotel.get(i).getWeekdayRate();
+                else
+                    totalCost = totalCost + hotel.get(i).getWeekendRate();
             }
+            hotel.get(i).setTotalCost(totalCost);
             if (min > totalCost) {
-                hotel.get(i).setTotalCost(totalCost);
                 cheapest = hotel.get(i);
                 min = totalCost;
             }
