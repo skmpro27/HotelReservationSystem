@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 enum CustomerType {
-    CUSTOMER_TYPE_REGULAR
+    CUSTOMER_TYPE_REGULAR,
+    CUSTOMER_TYPE_REWARD
 }
 
 public class HotelReservation {
@@ -23,6 +24,17 @@ public class HotelReservation {
 
     public int numberOfHotel() {
         return hotel.size();
+    }
+
+    public int typeCustomer(boolean weekday, int idxi) {
+        if (type == CustomerType.CUSTOMER_TYPE_REGULAR && weekday)
+            return hotel.get(idxi).getWeekdayRate();
+        else if (type == CustomerType.CUSTOMER_TYPE_REGULAR)
+            return hotel.get(idxi).getWeekendRate();
+        else if (type == CustomerType.CUSTOMER_TYPE_REWARD && weekday)
+            return hotel.get(idxi).getWeekdayRewardRate();
+        else
+            return hotel.get(idxi).getWeekendRewardRate();
     }
 
     public int dayOfWeek(String date) throws ParseException {
@@ -51,10 +63,8 @@ public class HotelReservation {
     public  int hotelTotalCost(int idx) throws ParseException {
         int totalCost = 0;
         for (int j = 0; j < dates.length; j++) {
-            if (dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7)
-                totalCost += hotel.get(idx).getWeekdayRate();
-            else
-                totalCost +=  hotel.get(idx).getWeekendRate();
+            boolean day = dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7;
+                totalCost += typeCustomer(day, idx);
         }
         return totalCost;
     }

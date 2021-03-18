@@ -9,9 +9,9 @@ public class HotelReservationTest {
     @Test
     public void givenHotelAddInHotelReservationReturnNumberOfHotel() {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0, 0, 0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -24,9 +24,9 @@ public class HotelReservationTest {
     @Test
     public void givenHotelRateAddInHotelReservationReturnCheapestHotel() throws ParseException {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -40,9 +40,9 @@ public class HotelReservationTest {
     @Test
     public void givenWeekdayAndWeekendRatesHotelReservationReturnSame() {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 0, 0);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 0, 0);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 0, 0);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -57,9 +57,9 @@ public class HotelReservationTest {
     @Test
     public void givenHotelRatesReturnCheapestHotel() throws ParseException {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -73,9 +73,9 @@ public class HotelReservationTest {
     @Test
     public void givenRatingAddRatesHotelReservationReturnSame() {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 0, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 0, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 0, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -90,9 +90,9 @@ public class HotelReservationTest {
     @Test
     public void givenHotelRatingReturnCheapestHotel() throws ParseException {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 3);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 4);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 5);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 3, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 4, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 5, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
@@ -106,16 +106,21 @@ public class HotelReservationTest {
     @Test
     public void givenDataHotelRatingReturnBestRatingHotel() throws ParseException {
         HotelReservation hotelReservation = new HotelReservation(CustomerType.CUSTOMER_TYPE_REGULAR);
-        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 3);
-        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 4);
-        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 5);
+        Hotel lakewood = new Hotel( "Lakewood", 110, 90, 3, 0, 0);
+        Hotel bridgewood = new Hotel( "Bridgewood", 150, 50, 4, 0, 0);
+        Hotel ridgewood = new Hotel( "Ridgewood", 220, 150, 5, 0,0);
         //adding hotels
         hotelReservation.addHotel(lakewood);
         hotelReservation.addHotel(bridgewood);
         hotelReservation.addHotel(ridgewood);
 
-        Hotel hotel = hotelReservation.bestRating("11-Sep-2020", "12-Sep-2020");
-        System.out.println("Name: " + hotel.getHotelName() + ", Total Rates: " + hotel.getTotalCost());
-        Assert.assertEquals("Ridgewood", hotel.getHotelName());
+        lakewood.setWeekdayRewardRate(80);
+        lakewood.setWeekendRewardRate(80);
+        bridgewood.setWeekdayRewardRate(110);
+        bridgewood.setWeekendRewardRate(50);
+        ridgewood.setWeekdayRewardRate(100);
+        ridgewood.setWeekendRewardRate(40);
+
+        Assert.assertEquals(80, lakewood.getWeekdayRewardRate());
     }
 }
