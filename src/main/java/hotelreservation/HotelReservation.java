@@ -41,15 +41,16 @@ public class HotelReservation {
             totalCost = 0;
             for (int j = 0; j < dates.length; j++) {
                 if (dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7)
-                    totalCost = totalCost + hotel.get(i).getWeekdayRate();
+                    totalCost += hotel.get(i).getWeekdayRate();
                 else
-                    totalCost = totalCost + hotel.get(i).getWeekendRate();
+                    totalCost +=  hotel.get(i).getWeekendRate();
             }
             hotel.get(i).setTotalCost(totalCost);
-            if (min > totalCost) {
-                cheapest = hotel.get(i);
-                min = totalCost;
-            }
+            if (min >= totalCost)
+                if (cheapest.getRating() < hotel.get(i).getRating()) {
+                    cheapest = hotel.get(i);
+                    min = totalCost;
+                }
         }
         return cheapest;
     }
