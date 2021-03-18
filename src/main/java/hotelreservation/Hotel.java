@@ -2,14 +2,16 @@ package hotelreservation;
 
 public class Hotel {
     private String hotelName;
+    private int rating;
     private int totalCost = 0;
     private int weekdayRate;
     private int weekendRate;
 
-    public Hotel(String hotelName, int weekdayRate, int weekendRate ) {
+    public Hotel(String hotelName, int weekdayRate, int weekendRate, int rating) {
         this.hotelName = hotelName;
         this.weekdayRate = weekdayRate;
         this.weekendRate = weekendRate;
+        this.rating = rating;
     }
 
     public String getHotelName() {
@@ -38,5 +40,13 @@ public class Hotel {
 
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
