@@ -26,15 +26,15 @@ public class HotelReservation {
         return hotel.size();
     }
 
-    public int typeCustomer(boolean weekday, int idxi) {
+    public int typeCustomer(boolean weekday, Hotel hotel) {
         if (type == CustomerType.CUSTOMER_TYPE_REGULAR && weekday)
-            return hotel.get(idxi).getWeekdayRate();
+            return hotel.getWeekdayRate();
         else if (type == CustomerType.CUSTOMER_TYPE_REGULAR)
-            return hotel.get(idxi).getWeekendRate();
-        else if (type == CustomerType.CUSTOMER_TYPE_REWARD && weekday)
-            return hotel.get(idxi).getWeekdayRewardRate();
+            return hotel.getWeekendRate();
+        else if (weekday)
+            return hotel.getWeekdayRewardRate();
         else
-            return hotel.get(idxi).getWeekendRewardRate();
+            return hotel.getWeekendRewardRate();
     }
 
     public int dayOfWeek(String date) throws ParseException {
@@ -44,40 +44,34 @@ public class HotelReservation {
         return cal.get(Calendar.DAY_OF_WEEK);
     }
 
-    public Hotel cheapestHotel(String... dates) throws ParseException {
-        this.dates = dates;
-        int min = 999999999;
-        Hotel cheapest = hotel.get(0);
-        for (int i = 0; i < hotel.size(); i++) {
-            int totalCost = hotelTotalCost(i);
-            hotel.get(i).setTotalCost(totalCost);
-            if (min >= totalCost)
-                if (cheapest.getRating() < hotel.get(i).getRating()) {
-                    cheapest = hotel.get(i);
-                    min = totalCost;
-                }
-        }
-        return cheapest;
+    public Hotel cheapestHotel() throws ParseException {
+        Hotel cheapest = hotel.stream()
+                .min(Comparator.comparing(Hotel::getTotalCost))
+                .orElseThrow(NoSuchElementException::new);
+
+        return hotel.stream()
+                .filter(ht -> ht.getTotalCost() == cheapest.getTotalCost())
+                .max(Comparator.comparing(Hotel::getRating))
+                .orElseThrow(NoSuchElementException::new);
     }
 
-    public  int hotelTotalCost(int idx) throws ParseException {
-        int totalCost = 0;
-        for (int j = 0; j < dates.length; j++) {
-            boolean day = dayOfWeek(dates[j]) > 1 && dayOfWeek(dates[j]) < 7;
-                totalCost += typeCustomer(day, idx);
-        }
-        return totalCost;
+    public void setHotelTotalCost(String... dates) {
+        this.dates = dates;
+        hotel.forEach(ht -> ht.setTotalCost(Arrays.stream(dates)
+                .map(date -> {
+                    try {
+                        return dayOfWeek(date) == 1 || dayOfWeek(date) == 7;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                })
+                .mapToInt(weekday -> typeCustomer(weekday, ht)).sum()));
     }
 
-    public Hotel bestRating(String... dates) throws ParseException {
-        this.dates = dates;
-        Hotel maxRating = hotel.get(0);
-        for (int i = 0; i < hotel.size(); i++) {
-            int totalCost = hotelTotalCost(i);
-            hotel.get(i).setTotalCost(totalCost);
-            if (maxRating.getRating() < hotel.get(i).getRating())
-                maxRating = hotel.get(i);
-        }
-        return maxRating;
+    public Hotel bestRating() throws ParseException {
+        return hotel.stream()
+                .max(Comparator.comparing(Hotel::getRating))
+                .orElseThrow(NoSuchElementException::new);
     }
 }
